@@ -54,14 +54,28 @@
                 <img src="" class="img-fluid" id="imagemProduto" alt="">
             </div>
             <div class="col-lg-7 col-md-6 position-relative bg-dark rounded">
-                <h4 class="position-absolute m-4 top-0 start-0 text-white" id="descricaoProduto"></h4>
-                <h2 class="position-absolute m-4 bottom-0 start-0 text-white" id="precoProduto"></h2>
-                <div class="position-absolute m-4 bottom-0 end-0">
-                    <button class="btn btn-primary" onclick="window.location.href='carrinho.html?produto=' + codigoProduto">
-                        Comprar
-                    </button>
+              <div class="position-absolute m-4 top-0 start-0">
+                <h4 class="text-white" id="descricaoProduto"></h4>
+                <div id="estoque">
                 </div>
+              </div>
+              <div class="position-absolute m-4 top-50 start-0 translate-middle-y">
+                <h3 class="text-success" id="precoProduto"></h2>
+                <p class="text-white">À Vista </p>
+                <h5 class="text-danger" id="precoSemDesconto"></h2>
+                <p class="text-white" id="parcelas"></p>
+              </div>
+              <div class="position-absolute m-4 bottom-0 end-0" id="comprar">
+                <!--
+                  <button class="btn btn-primary" onclick="window.location.href='carrinho.html?produto=' + codigoProduto">
+                      Comprar
+                  </button>
+                -->
+              </div>
             </div>
+        </div>
+        <div class="container mt-3" id="produtos">
+          <div id="cardsContainer" class="row justify-content-md-center mt-5 d-flex align-items-stretch"></div>
         </div>
       </div>
 
@@ -79,12 +93,95 @@
                 document.getElementById('descricaoProduto').innerHTML = produto.descricao;
                 document.getElementById('titulo').innerHTML = produto.descricao;
                 document.getElementById('precoProduto').innerHTML = `R$ ${produto.preco.toFixed(2)}`;
+                document.getElementById('precoSemDesconto').innerHTML = `R$ ${(produto.preco + ((produto.preco/85)*15)).toFixed(2)}`
+                document.getElementById('parcelas').innerHTML = `12x de R$ ${((produto.preco + ((produto.preco/85)*15))/12).toFixed(2)} sem juros no cartão`
                 document.getElementById('imagemProduto').src = `img/${produto.id}.jpg`;
+                const disbonibilidade = document.getElementById('estoque')
+                const estoque = document.createElement('h5')
+                const compra = document.getElementById('comprar')
+                if(produto.estoque > 0){
+                  estoque.classList.add('text-success');
+                  estoque.textContent = "Disponivel";
+                  const botaoCompra = document.createElement('button');
+                  botaoCompra.classList.add('btn', 'btn-primary');
+                  botaoCompra.setAttribute('onclick', "window.location.href='carrinho.html?produto=' + codigoProduto");
+                  botaoCompra.textContent = 'Comprar';
+                  compra.appendChild(botaoCompra);
+                } else {
+                  estoque.classList.add('text-danger');
+                  estoque.textContent = "Indisponivel";
+                }
+                disbonibilidade.appendChild(estoque);
+
             } else {
                 console.error('Produto não encontrado');
                 // Trate o caso de produto não encontrado aqui
             }
         });
+
+      
+
+      async function carregarProdutos() {
+        try {
+          const response = await fetch('produtos.json');
+          const produtos = await response.json();
+
+          const cardsContainer = document.getElementById('cardsContainer');
+          let produtosExibidos = 0;
+
+          produtos.forEach(produto => {
+            if (produto.id !== Number(codigoProduto) && produtosExibidos < 4) {
+              const cardDiv = document.createElement('div');
+              cardDiv.classList.add('col-lg-3', 'col-md-6', 'mb-5');
+
+              const card = document.createElement('div');
+              card.classList.add('card', 'h-100');
+
+              const img = document.createElement('img');
+              img.src = `img/${produto.id}.jpg`; // Supondo que as imagens tenham nomes correspondentes aos IDs dos produtos
+              img.classList.add('card-img-top');
+              img.alt = '...';
+
+              const cardBody = document.createElement('div');
+              cardBody.classList.add('card-body');
+
+              const link = document.createElement('a');
+              link.href = `produto.html?produto=${produto.id}`;
+
+              const linkImg = document.createElement('a');
+              linkImg.href = `produto.html?produto=${produto.id}`;
+
+              const descricao = document.createElement('p');
+              descricao.classList.add('card-text');
+              descricao.textContent = produto.descricao;
+
+              const preco = document.createElement('h5');
+              preco.classList.add('card-title');
+              preco.textContent = `R$ ${produto.preco.toFixed(2)}`;
+
+              const freteGratis = document.createElement('p');
+              freteGratis.classList.add('card-text');
+              freteGratis.innerHTML = '<small class="text-body-secondary">frete gratis</small>';
+
+              link.appendChild(descricao);
+              cardBody.appendChild(link);
+              cardBody.appendChild(preco);
+              cardBody.appendChild(freteGratis);
+              linkImg.appendChild(img);
+              card.appendChild(linkImg);
+              card.appendChild(cardBody);
+              cardDiv.appendChild(card);
+              cardsContainer.appendChild(cardDiv);
+
+              produtosExibidos++;
+            }
+          });
+        } catch (error) {
+          console.error('Erro ao carregar os produtos:', error);
+        }
+      }
+
+      carregarProdutos();
     </script>
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

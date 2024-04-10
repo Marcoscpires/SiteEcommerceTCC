@@ -1,8 +1,9 @@
-[{"id":1,"descricao":"Apple iPhone 15 256GB Preto 5G Tela 6,1\" Câm. Traseira 48+12MP Frontal 12MP","preco":5899.90}
-,{"id":2,"descricao":"Processador AMD Ryzen 5 7600X 4.7GHz/ 5.3GHz Hexa-Core 38MB AM5 - 100-100000593WOF","preco":1498.99}
-,{"id":3,"descricao":"ROTEADOR TP-LINK AC1350 ARCHER C60","preco":429.00}
-,{"id":4,"descricao":"Sony Play Station 5 Com 2 controles","preco":4499.00}
-,{"id":5,"descricao":"Placa de Vídeo Gigabyte NVIDIA GeForce RTX 4060 Gaming OC, 8G, 8GB, GDDR6, DLSS, Ray Tracing","preco":1959.99}
-,{"id":6,"descricao":"Kingston Memória Ram Fury Renegade Rgb 1x16gb DDR5 7200mhz Colorido","preco":719.99}
-,{"id":7,"descricao":"Microsoft Xbox Series X 1TB Standard - Preto","preco":4079.00}
-,{"id":8,"descricao":"Controle Microsoft Xbox Carbon Black, Sem Fio, Para Xbox Series X e S, Preto","preco":329.00}]
+[{"id":1,"descricao":"Apple iPhone 15 256GB Preto 5G Tela 6,1\" Câm. Traseira 48+12MP Frontal 12MP","preco":5899.90,"estoque":5}
+,{"id":2,"descricao":"Processador AMD Ryzen 5 7600X 4.7GHz/ 5.3GHz Hexa-Core 38MB AM5 - 100-100000593WOF","preco":1498.99,"estoque":10}
+,{"id":3,"descricao":"ROTEADOR TP-LINK AC1350 ARCHER C60","preco":429.00,"estoque":3}
+,{"id":4,"descricao":"Sony Play Station 5 Com 2 controles","preco":4499.00,"estoque":2}
+,{"id":5,"descricao":"Placa de Vídeo Gigabyte NVIDIA GeForce RTX 4060 Gaming OC, 8G, 8GB, GDDR6, DLSS, Ray Tracing","preco":1959.99,"estoque":0}
+,{"id":6,"descricao":"Kingston Memória Ram Fury Renegade Rgb 1x16gb DDR5 7200mhz Colorido","preco":719.99,"estoque":10}
+,{"id":7,"descricao":"Microsoft Xbox Series X 1TB Standard - Preto","preco":4079.00,"estoque":4}
+,{"id":8,"descricao":"Controle Microsoft Xbox Carbon Black, Sem Fio, Para Xbox Series X e S, Preto","preco":329.00,"estoque":15}]
+
