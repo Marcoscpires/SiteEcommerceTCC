@@ -81,46 +81,42 @@
 
     
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const codigoProduto = urlParams.get('produto');
+      const urlParams = new URLSearchParams(window.location.search);
+      const codigoProduto = Number(urlParams.get('produto'));
 
-        fetch('produtos.json')
-        .then(response => response.json())
-        .then(data => {
-            // Converte codigoProduto para Number antes da comparação
-            const produto = data.find(produto => produto.id === Number(codigoProduto));
-            if (produto) {
-                document.getElementById('descricaoProduto').innerHTML = produto.descricao;
-                document.getElementById('titulo').innerHTML = produto.descricao;
-                document.getElementById('precoProduto').innerHTML = `R$ ${produto.preco.toFixed(2)}`;
-                document.getElementById('precoSemDesconto').innerHTML = `R$ ${(produto.preco + ((produto.preco/85)*15)).toFixed(2)}`
-                document.getElementById('parcelas').innerHTML = `12x de R$ ${((produto.preco + ((produto.preco/85)*15))/12).toFixed(2)} sem juros no cartão`
-                document.getElementById('imagemProduto').src = `img/${produto.id}.jpg`;
-                const disbonibilidade = document.getElementById('estoque')
-                const estoque = document.createElement('h5')
-                const compra = document.getElementById('comprar')
-                if(produto.estoque > 0){
-                  estoque.classList.add('text-success');
-                  estoque.textContent = "Disponivel";
-                  const botaoCompra = document.createElement('button');
-                  botaoCompra.classList.add('btn', 'btn-primary');
-                  botaoCompra.setAttribute('onclick', "window.location.href='carrinho.html?produto=' + codigoProduto");
-                  botaoCompra.textContent = 'Comprar';
-                  compra.appendChild(botaoCompra);
-                } else {
-                  estoque.classList.add('text-danger');
-                  estoque.textContent = "Indisponivel";
-                }
-                disbonibilidade.appendChild(estoque);
+      fetch('produtos.json')
+      .then(response => response.json())
+      .then(data => {
+          const produto = data.find(produto => produto.id === codigoProduto);
+          if (produto) {
+              document.getElementById('descricaoProduto').innerHTML = produto.descricao;
+              document.getElementById('titulo').innerHTML = produto.descricao;
+              document.getElementById('precoProduto').innerHTML = `R$ ${produto.preco.toFixed(2)}`;
+              document.getElementById('precoSemDesconto').innerHTML = `R$ ${(produto.preco + ((produto.preco/85)*15)).toFixed(2)}`
+              document.getElementById('parcelas').innerHTML = `12x de R$ ${((produto.preco + ((produto.preco/85)*15))/12).toFixed(2)} sem juros no cartão`
+              document.getElementById('imagemProduto').src = `img/${produto.id}.jpg`;
+              const disbonibilidade = document.getElementById('estoque')
+              const estoque = document.createElement('h5')
+              const compra = document.getElementById('comprar')
+              if(produto.estoque > 0){
+                estoque.classList.add('text-success');
+                estoque.textContent = "Disponivel";
+                const botaoCompra = document.createElement('button');
+                botaoCompra.classList.add('btn', 'btn-primary');
+                botaoCompra.setAttribute('onclick', "window.location.href='carrinho.html?produto=' + codigoProduto");
+                botaoCompra.textContent = 'Comprar';
+                compra.appendChild(botaoCompra);
+              } else {
+                estoque.classList.add('text-danger');
+                estoque.textContent = "Indisponivel";
+              }
+              disbonibilidade.appendChild(estoque);
 
-            } else {
-                console.error('Produto não encontrado');
-                // Trate o caso de produto não encontrado aqui
-            }
-        });
-
-      
-
+          } else {
+              console.error('Produto não encontrado');
+              // Trate o caso de produto não encontrado aqui
+          }
+      });
       async function carregarProdutos() {
         try {
           const response = await fetch('produtos.json');
@@ -180,7 +176,6 @@
           console.error('Erro ao carregar os produtos:', error);
         }
       }
-
       carregarProdutos();
     </script>
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

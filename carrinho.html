@@ -44,10 +44,80 @@
               </li>
             </ul>
           </div>
-        <button class="btn btn-outline-light ms-auto" onclick="window.location.href='login.html'">Login</button>
+          <button class="btn btn-outline-light ms-auto" onclick="window.location.href='login.html'">Login</button>
         </div>
-      </nav>
-    <h1>Meu Carrinho</h1>
+    </nav>
+
+    <div class="container">
+        <h1>Meu Carrinho</h1>
+        <div class="row justify-content-md-center align-items-center">
+            <div class="col-2">
+                <img src="" class="img-fluid" id="imagemProduto" alt="">
+            </div>
+            <!-- informação dos produtos -->
+            <div class="col-5 border rounded p-3">
+                <p id="descricao"></p>
+                <div class="row justify-content-between align-items-end">
+                    <div class="col-4">
+                        <div class="d-flex">
+                            <button class="btn btn-outline-secondary" type="button" id="button-minus">-</button>
+                            <input type="text" class="form-control text-center" value="1" id="quantidade" readonly style="width: 60px;">
+                            <button class="btn btn-outline-secondary" type="button" id="button-plus">+</button>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <h5 id="precoAcumulado"></h5>
+                    </div>
+                </div>
+            </div>
+            <!---->
+        </div>
+        <div class="row justify-content-center mt-3">
+            <div class="col-7 text-end">
+                <button class="btn btn-success" onclick="window.location.href='finalizar_pedido.html'">Finalizar Pedido</button>
+            </div>
+        </div>
+        
+    </div>
+   
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const codigoProduto = Number(urlParams.get('produto'));
+
+        fetch('produtos.json')
+        .then(response => response.json())
+        .then(data => {
+            const produto = data.find(produto => produto.id === codigoProduto);
+            if (produto) {
+                document.getElementById('descricao').innerHTML = produto.descricao;
+                document.getElementById('imagemProduto').src = `img/${produto.id}.jpg`;
+                //quantidade
+                const buttonPlus = document.getElementById('button-plus');
+                const buttonMinus = document.getElementById('button-minus');
+                const quantidade = document.getElementById('quantidade');
+                const maxQuantidade = produto.estoque; // Defina o limite máximo aqui
+                const minQuantidade = 1; // Defina o limite mínimo aqui
+                document.getElementById('precoAcumulado').innerHTML = `R$ ${produto.preco.toFixed(2)}`;
+                buttonPlus.addEventListener('click', () => {
+                    let valorAtual = parseInt(quantidade.value);
+                    if (valorAtual < maxQuantidade) {
+                        quantidade.value = valorAtual + 1;
+                        document.getElementById('precoAcumulado').innerHTML = `R$ ${(produto.preco * quantidade.value).toFixed(2)}`;
+                    }
+                });
+                buttonMinus.addEventListener('click', () => {
+                    let valorAtual = parseInt(quantidade.value);
+                    if (valorAtual > minQuantidade) {
+                        quantidade.value = valorAtual - 1;
+                        document.getElementById('precoAcumulado').innerHTML = `R$ ${(produto.preco * quantidade.value).toFixed(2)}`;
+                    }
+                });
+                //valor
+                document.getElementById('precoAcumulado').innerHTML = `R$ ${produto.preco.toFixed(2)}`;
+            }
+        })     
+
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"></script>
 </body>
 </html>
