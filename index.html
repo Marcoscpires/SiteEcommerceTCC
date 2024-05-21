@@ -29,14 +29,18 @@
           width: 20em;
         }
       }
-      a {
+      #produtos a {
         text-decoration: none;
         color: rgb(32, 32, 32);
+      }
+      nav a {
+        text-decoration: none;
+        color: rgb(255, 255, 255);
       }
     </style>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg bg-dark">
+    <nav class="navbar navbar-expand-lg bg-dark fixed-top">
       <div class="container-fluid" id="navbar">
         <a class="text-white navbar-brand" href="">Syncord Store</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,15 +61,16 @@
             </li>
           </ul>
         </div>
+
       <button class="btn btn-outline-light ms-auto" onclick="window.location.href='login.html'">Login</button>
-      <svg class="bi" width="32" height="32" fill="currentColor">
-        <use xlink:href="bootstrap-icons.svg#heart-fill"/>
-      </svg>
+      <a class="icon-link ms-2" href="http://localhost:9000/">
+        Admin
+      </a>
       </div>
     </nav>
 
     
-    <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+    <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel" style="padding-top: 56px;">
       <div class="carousel-inner">
         <div class="carousel-item active" data-bs-interval="7000">
           <img src="img/carrossel1.jpg" class="d-block w-100" alt="...">
